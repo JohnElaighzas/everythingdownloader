@@ -143,46 +143,35 @@ def baixar_video(url, formato, qualidade):
     # Cria diretório temporário
     temp_dir = tempfile.mkdtemp()
     
-    # Configurações do yt-dlp - ULTRA BYPASS MODE
+    # Configurações do yt-dlp - VERSÃO ATUALIZADA 2024
     opcoes = {
     'outtmpl': os.path.join(temp_dir, '%(title)s.%(ext)s'),
     'quiet': True,
     'no_warnings': True,
     'noplaylist': True,
     
-    # 🔥 BYPASS AGRESSIVO
+    # 🔥 BYPASS COMPLETO
     'age_limit': None,
     'geo_bypass': True,
-    'geo_bypass_country': 'US',
     
-    # 🔥 Headers completos de navegador real
+    # 🔥 Headers de navegador ATUAL
     'http_headers': {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
         'Accept-Language': 'en-US,en;q=0.9',
         'Accept-Encoding': 'gzip, deflate, br',
-        'DNT': '1',
-        'Connection': 'keep-alive',
-        'Upgrade-Insecure-Requests': '1',
         'Sec-Fetch-Dest': 'document',
         'Sec-Fetch-Mode': 'navigate',
         'Sec-Fetch-Site': 'none',
-        'Sec-Fetch-User': '?1',
-        'Cache-Control': 'max-age=0',
     },
 
-    # 🔥 Tenta TODOS os métodos possíveis
+    # 🔥 Configurações de extrator atualizadas
     'extractor_args': {
         'youtube': {
-            'player_client': ['android', 'web', 'ios', 'mweb'],
-            'player_skip': ['webpage', 'configs'],
-            'skip': ['hls', 'dash'],
+            'player_client': ['ios', 'android'],  # iOS funciona melhor agora
+            'player_skip': ['configs'],
         }
     },
-    
-    # 🔥 Outras tentativas
-    'nocheckcertificate': True,
-    'prefer_insecure': True,
 }
     
     # Configurações específicas por formato
