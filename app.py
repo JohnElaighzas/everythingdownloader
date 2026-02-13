@@ -143,31 +143,46 @@ def baixar_video(url, formato, qualidade):
     # Cria diretório temporário
     temp_dir = tempfile.mkdtemp()
     
-    # Configurações do yt-dlp
+    # Configurações do yt-dlp - ULTRA BYPASS MODE
     opcoes = {
     'outtmpl': os.path.join(temp_dir, '%(title)s.%(ext)s'),
     'quiet': True,
     'no_warnings': True,
     'noplaylist': True,
     
-    # 👇 BYPASS de verificação de idade
-    'age_limit': None,  # Remove limite de idade
+    # 🔥 BYPASS AGRESSIVO
+    'age_limit': None,
+    'geo_bypass': True,
+    'geo_bypass_country': 'US',
     
-    # 👇 Faz parecer navegador real
+    # 🔥 Headers completos de navegador real
     'http_headers': {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-us,en;q=0.5',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'DNT': '1',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'Sec-Fetch-Dest': 'document',
         'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-User': '?1',
+        'Cache-Control': 'max-age=0',
     },
 
-    # 👇 Usa client Android/Web (menos bloqueado)
+    # 🔥 Tenta TODOS os métodos possíveis
     'extractor_args': {
         'youtube': {
-            'player_client': ['android', 'web'],
-            'skip': ['hls', 'dash']  # Pula formatos problemáticos
+            'player_client': ['android', 'web', 'ios', 'mweb'],
+            'player_skip': ['webpage', 'configs'],
+            'skip': ['hls', 'dash'],
         }
-    }
+    },
+    
+    # 🔥 Outras tentativas
+    'nocheckcertificate': True,
+    'prefer_insecure': True,
 }
     
     # Configurações específicas por formato
