@@ -69,7 +69,7 @@ with st.sidebar:
     st.markdown("""
     ### 📊 Sobre
     
-    **Versão:** 3.0 Web
+    **Versão:** 3.1 Web
     
     **Plataformas suportadas:**
     - ✅ YouTube
@@ -117,7 +117,7 @@ with col1:
 
 with col2:
     formato = st.selectbox(
-        "📝 Formato:",
+        "📁 Formato:",
         ["MP3", "MP4"],
         help="MP3 = apenas áudio | MP4 = vídeo completo"
     )
@@ -143,7 +143,7 @@ def baixar_video(url, formato, qualidade):
     # Cria diretório temporário
     temp_dir = tempfile.mkdtemp()
     
-    # Configurações do yt-dlp - VERSÃO ATUALIZADA 2024
+    # Configurações do yt-dlp - VERSÃO ATUALIZADA 2024/2025
     opcoes = {
     'outtmpl': os.path.join(temp_dir, '%(title)s.%(ext)s'),
     'quiet': True,
@@ -154,7 +154,7 @@ def baixar_video(url, formato, qualidade):
     'age_limit': None,
     'geo_bypass': True,
     
-    # 🔥 Headers de navegador ATUAL
+    # 🔥 Headers de navegador ATUAL (Chrome 122)
     'http_headers': {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
@@ -165,10 +165,10 @@ def baixar_video(url, formato, qualidade):
         'Sec-Fetch-Site': 'none',
     },
 
-    # 🔥 Configurações de extrator atualizadas
+    # 🔥 Player client iOS (funciona melhor em 2024/2025)
     'extractor_args': {
         'youtube': {
-            'player_client': ['ios', 'android'],  # iOS funciona melhor agora
+            'player_client': ['ios', 'android'],
             'player_skip': ['configs'],
         }
     },
@@ -191,7 +191,6 @@ def baixar_video(url, formato, qualidade):
             resolucao = qualidade.split('p')[0]
             opcoes.update({
                 'format': f'best[height<={resolucao}]',
-
                 'merge_output_format': 'mp4',
             })
         else:
@@ -253,7 +252,7 @@ if st.button("⬇️ BAIXAR AGORA", type="primary", use_container_width=True):
                 <div class="success-box">
                     <h3>✅ Download Pronto!</h3>
                     <p><strong>📄 Título:</strong> {titulo}</p>
-                    <p><strong>📝 Formato:</strong> {formato}</p>
+                    <p><strong>📁 Formato:</strong> {formato}</p>
                     {f'<p><strong>🎬 Qualidade:</strong> {qualidade}</p>' if formato == 'MP4' else ''}
                     <p><strong>📦 Tamanho:</strong> {tamanho_mb:.1f} MB</p>
                 </div>
@@ -285,9 +284,7 @@ if st.button("⬇️ BAIXAR AGORA", type="primary", use_container_width=True):
             # Erros específicos
             if "private" in erro_msg.lower():
                 st.error("❌ Este vídeo é privado e não pode ser baixado.")
-            elif "age" in erro_msg.lower() or "restricted" in erro_msg.lower():
-                st.error("❌ Este vídeo tem restrição de idade (+18) e não pode ser baixado.")
-            elif "not available" in erro_msg.lower():
+            elif "not available" in erro_msg.lower() or "unavailable" in erro_msg.lower():
                 st.error("❌ Este vídeo não está disponível ou foi removido.")
             elif "unsupported url" in erro_msg.lower():
                 st.error("❌ Este site não é suportado. Tente YouTube, TikTok, Instagram ou Twitter.")
@@ -336,7 +333,7 @@ with col3:
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; color: gray; padding: 2rem;">
-    <p><strong>YouTube Downloader PRO</strong> - Versão Web 3.0</p>
+    <p><strong>YouTube Downloader PRO</strong> - Versão Web 3.1</p>
     <p>Feito com ❤️ usando Python, Streamlit e yt-dlp</p>
     <p>⚖️ Use com responsabilidade - Respeite os direitos autorais</p>
 </div>
