@@ -1,0 +1,157 @@
+═══════════════════════════════════════════════════════════════
+  CORREÇÃO DO PROBLEMA +18 - YOUTUBE DOWNLOADER
+═══════════════════════════════════════════════════════════════
+
+🔧 O QUE FOI CORRIGIDO?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+O problema era que o yt-dlp estava bloqueando TODOS os vídeos
+porque ele não conseguia verificar se eram +18 sem fazer login
+no YouTube.
+
+SOLUÇÃO APLICADA:
+
+✅ Adicionei 'age_limit': None
+   → Remove a verificação de idade
+
+✅ Melhorei os headers HTTP
+   → Faz o app parecer mais um navegador real
+
+✅ Adicionei múltiplos player_clients
+   → Tenta Android E Web se um falhar
+
+✅ Atualizei os avisos no app
+   → Agora não menciona mais +18
+
+═══════════════════════════════════════════════════════════════
+
+📤 COMO ATUALIZAR NO HUGGING FACE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OPÇÃO 1 - SUBSTITUIR ARQUIVO (MAIS FÁCIL):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Acesse seu Space no Hugging Face
+   https://huggingface.co/spaces/SEU_USUARIO/SEU_SPACE
+
+2. Clique no arquivo "app.py"
+
+3. Clique no ícone de lápis (Edit file)
+
+4. Selecione tudo (Ctrl+A) e delete
+
+5. Abra o novo app.py (que você baixou aqui) em um editor
+   de texto (Bloco de Notas, VS Code, etc)
+
+6. Copie TODO o conteúdo do novo app.py
+
+7. Cole no editor do Hugging Face
+
+8. No campo "Commit message", escreva:
+   "Fix age restriction bypass"
+
+9. Clique em "Commit changes to main"
+
+10. Aguarde 1-2 minutos para o Space reiniciar
+
+✅ PRONTO! Teste com qualquer vídeo agora!
+
+
+OPÇÃO 2 - UPLOAD NOVO (ALTERNATIVA):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Acesse seu Space
+
+2. Clique no arquivo "app.py" atual
+
+3. Clique nos três pontinhos (...) → Delete
+
+4. Confirme a exclusão
+
+5. Clique em "+ Add file" → Upload files
+
+6. Selecione o novo app.py
+
+7. Commit changes
+
+8. Aguarde o restart
+
+═══════════════════════════════════════════════════════════════
+
+🧪 TESTANDO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Após atualizar, teste com:
+
+✅ Vídeos normais do YouTube
+✅ Vídeos de música
+✅ Vídeos de tutorial
+✅ Qualquer vídeo público
+
+Agora deve funcionar!
+
+═══════════════════════════════════════════════════════════════
+
+⚠️ OBSERVAÇÕES IMPORTANTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Alguns vídeos ainda podem não funcionar se:
+  - Forem privados
+  - Estiverem ao vivo (livestream)
+  - Tiverem outras proteções do site
+
+• Isso é NORMAL e não tem como contornar
+
+• A maioria dos vídeos públicos vai funcionar agora!
+
+═══════════════════════════════════════════════════════════════
+
+📝 MUDANÇAS NO CÓDIGO (TÉCNICO)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Principais mudanças em app.py:
+
+ANTES:
+opcoes = {
+    'http_headers': {
+        'User-Agent': '...'
+    },
+    'extractor_args': {
+        'youtube': {
+            'player_client': ['android']
+        }
+    }
+}
+
+DEPOIS:
+opcoes = {
+    'age_limit': None,  # ← NOVA LINHA
+    'http_headers': {
+        'User-Agent': '...',
+        'Accept': '...',          # ← NOVO
+        'Accept-Language': '...', # ← NOVO
+        'Sec-Fetch-Mode': '...'   # ← NOVO
+    },
+    'extractor_args': {
+        'youtube': {
+            'player_client': ['android', 'web'], # ← ATUALIZADO
+            'skip': ['hls', 'dash']  # ← NOVO
+        }
+    }
+}
+
+═══════════════════════════════════════════════════════════════
+
+💡 DICA EXTRA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Se MESMO ASSIM algum vídeo específico não funcionar:
+
+1. Tente copiar o link novamente
+2. Tente link encurtado (youtu.be)
+3. Tente mudar a qualidade
+4. Teste com MP3 em vez de MP4
+
+═══════════════════════════════════════════════════════════════
+
+Qualquer dúvida, é só chamar! 🚀
